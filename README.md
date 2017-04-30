@@ -18,9 +18,10 @@ compile 'com.ycjiang:MediarGallery:1.0.1'
   <version>1.0.1</version>
   <type>pom</type>
 </dependency>
-
+````
 
 ![](images/sss.gif)
+
 
 ```java
     LoadViewHelper helper = new LoadViewHelper(listView);  
