@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="load_empty_id_text" type="id" />
+    <item name="load_empty_id_btn" type="id" />
+    <item name="load_error_id_text" type="id" />
+    <item name="load_error_id_btn" type="id" />
+    <item name="load_ing_id_text" type="id" />
+</resources>

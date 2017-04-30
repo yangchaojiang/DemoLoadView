@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/ssssss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showLoadError"
+            android:text="模拟加载失败" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showLoadSuccess"
+            android:text="模拟加载成功" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showLoadEmpty"
+            android:text="模拟无数据" />
+    </LinearLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/Toolbar"
+        android:layout_below="@+id/ssssss"
+        android:layout_width="match_parent"
+        android:title="asdasdasd"
+        android:layout_height="40dp"/>
+    <ListView
+        android:layout_below="@+id/Toolbar"
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
+
+</RelativeLayout>
