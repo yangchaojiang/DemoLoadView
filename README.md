@@ -8,14 +8,14 @@
 通过Gradle抓取:
 
 ```gradle
-compile 'com.ycjiang:MediarGallery:1.0.1'
+compile 'com.ycjiang:loadviewhelper:1.0.0'
 
 ```
 ```Maven
 <dependency>
   <groupId>com.ycjiang</groupId>
-  <artifactId>MediarGallery</artifactId>
-  <version>1.0.1</version>
+  <artifactId>loadviewhelper</artifactId>
+  <version>1.0.0</version>
   <type>pom</type>
 </dependency>
 ````
