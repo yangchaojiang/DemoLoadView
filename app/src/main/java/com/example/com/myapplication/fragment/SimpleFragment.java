@@ -45,7 +45,6 @@ public class SimpleFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listView1);
         helper = new LoadViewHelper(listView);
         listView.setAdapter(adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, data));
-        helper = new LoadViewHelper(listView);
         helper.showLoading();
         rand = new Random();
         type = rand.nextInt(3);

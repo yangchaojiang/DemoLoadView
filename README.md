@@ -8,7 +8,7 @@
 通过Gradle抓取:
 
 ```gradle
-compile 'com.ycjiang:loadviewhelper:1.0.0'
+compile 'com.ycjiang:loadviewhelper:1.0.1'
 
 ```
 ```Maven
