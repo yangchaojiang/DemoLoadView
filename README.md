@@ -15,7 +15,7 @@ compile 'com.ycjiang:loadviewhelper:1.0.1'
 <dependency>
   <groupId>com.ycjiang</groupId>
   <artifactId>loadviewhelper</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ````
