@@ -44,7 +44,7 @@ public class Example2Activity extends AppCompatActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            helper.restore();
+            helper.showContent();
         }
 
         ;

@@ -108,7 +108,7 @@ public class SimpleFragment extends Fragment {
             } else {
                 data.clear();
                 data.addAll(result);
-                helper.restore();
+                helper.showContent();
                 adapter.notifyDataSetChanged();
             }
         }

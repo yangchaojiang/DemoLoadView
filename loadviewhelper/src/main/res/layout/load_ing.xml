@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#5555"
+    android:background="#cac9c8"
     android:orientation="vertical" >
 
     <ProgressBar

@@ -14,6 +14,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     public void showSimple(View view) {
         startActivity(new Intent(getApplicationContext(), SimpleActivity.class));
     }
@@ -27,9 +32,5 @@ public class MainActivity extends Activity {
     }
     public void showExample3(View view) {
         startActivity(new Intent(getApplicationContext(), DemoFragmentActivity.class));
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

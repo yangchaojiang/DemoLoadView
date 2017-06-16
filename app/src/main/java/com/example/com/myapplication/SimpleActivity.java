@@ -41,6 +41,6 @@ public class SimpleActivity extends Activity {
     }
 
     public void showSuccess(View view) {
-        helper.restore();
+        helper.showContent();
     }
 }

@@ -1,33 +1,20 @@
-/*
-Copyright 2015 shizhefei（LuckyJayce）
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-   http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
-package com.helper.loadviewhelper.load;
 
+package com.helper.loadviewhelper.load;
 
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.helper.loadviewhelper.R;
 import com.helper.loadviewhelper.help.IVaryViewHelper;
 import com.helper.loadviewhelper.help.OnLoadViewListener;
-import com.helper.loadviewhelper.help.VaryViewHelper;
+import com.helper.loadviewhelper.help.VaryViewHelperX;
 
 /**
  * Created by yangc on 2017/4/30.
  * E-Mail:yangchaojiang@outlook.com
  * Deprecated: 自定义要切换的布局，通过IVaryViewHelper实现真正的切换<br>
- *    使用者可以根据自己的需求，使用自己定义的布局样式
+ * 使用者可以根据自己的需求，使用自己定义的布局样式
  */
 public class LoadViewHelper implements OnClickListener {
 
@@ -35,13 +22,16 @@ public class LoadViewHelper implements OnClickListener {
     private View loadError;
     private View loadEmpty;
     private View loadIng;
+
     private OnLoadViewListener listener;
+    private  volatile static   Builder builder=new Builder();
+
 
     public LoadViewHelper(View view) {
-        this(new VaryViewHelper(view));
+        this(new VaryViewHelperX(view));
     }
 
-    public LoadViewHelper(IVaryViewHelper helper) {
+    public LoadViewHelper(VaryViewHelperX helper) {
         super();
         this.helper = helper;
     }
@@ -56,14 +46,18 @@ public class LoadViewHelper implements OnClickListener {
      *****/
     public void showError(String errorText, String buttonText) {
         if (loadError == null) {
-            loadError = helper.inflate(R.layout.load_error);
-            if (errorText != null) {
-                TextView textView = (TextView) loadError.findViewById(R.id.load_error_id_text);
-                textView.setText(errorText);
-            }
-            if (buttonText != null) {
-                Button button = (Button) loadError.findViewById(R.id.load_error_id_btn);
-                button.setText(buttonText);
+            if (builder.loadError==0){
+                loadError = helper.inflate(R.layout.load_error);
+                if (errorText != null) {
+                    TextView textView = (TextView) loadError.findViewById(R.id.load_error_id_text);
+                    textView.setText(errorText);
+                }
+                if (buttonText != null) {
+                    Button button = (Button) loadError.findViewById(R.id.load_error_id_btn);
+                    button.setText(buttonText);
+                }
+            }else {
+                loadError = helper.inflate(builder.loadError);
             }
         }
         if (loadError.findViewById(R.id.load_error_id_btn) != null) {
@@ -90,14 +84,18 @@ public class LoadViewHelper implements OnClickListener {
      *****/
     public void showEmpty(String errorText, String buttonText) {
         if (loadEmpty == null) {
-            loadEmpty = helper.inflate(R.layout.load_empty);
-            if (errorText != null) {
-                TextView textView = (TextView) loadEmpty.findViewById(R.id.load_empty_id_text);
-                textView.setText(errorText);
-            }
-            if (buttonText != null) {
-                Button button = (Button) loadEmpty.findViewById(R.id.load_empty_id_btn);
-                button.setText(buttonText);
+            if (builder.loadEmpty==0){
+                loadEmpty = helper.inflate(R.layout.load_empty);
+                if (errorText != null) {
+                    TextView textView = (TextView) loadEmpty.findViewById(R.id.load_empty_id_text);
+                    textView.setText(errorText);
+                }
+                if (buttonText != null) {
+                    Button button = (Button) loadEmpty.findViewById(R.id.load_empty_id_btn);
+                    button.setText(buttonText);
+                }
+            }else {
+                loadEmpty = helper.inflate(builder.loadEmpty);
             }
         }
         if (loadEmpty.findViewById(R.id.load_empty_id_btn) != null) {
@@ -123,9 +121,13 @@ public class LoadViewHelper implements OnClickListener {
      **/
     public void showLoading(String loadText) {
         if (loadIng == null) {
-            loadIng = helper.inflate(R.layout.load_ing);
-            TextView textView = (TextView) loadIng.findViewById(R.id.load_ing_id_text);
-            textView.setText(loadText);
+            if (builder.loadIng==0){
+                loadIng = helper.inflate(R.layout.load_ing);
+                TextView textView = (TextView) loadIng.findViewById(R.id.load_ing_id_text);
+                textView.setText(loadText);
+            }else {
+                loadIng = helper.inflate(builder.loadIng);
+            }
         }
         helper.showLayout(loadIng);
     }
@@ -137,7 +139,7 @@ public class LoadViewHelper implements OnClickListener {
         showLoading(null);
     }
 
-    public void restore() {
+    public void showContent() {
         helper.restoreView();
     }
 
@@ -200,4 +202,36 @@ public class LoadViewHelper implements OnClickListener {
             listener.onRetryClick();
         }
     }
+
+    /***
+     * 全部配置类
+     * ***/
+    public static final  class Builder {
+        int loadIng;//全局配置加载
+        int loadEmpty;//全局配置为空
+        int loadError;//全局配置错误
+
+        public Builder() {
+
+        }
+
+        public Builder setLoadIng(int loadIng) {
+            this.loadIng = loadIng;
+            return this;
+        }
+
+        public Builder setLoadEmpty(int loadEmpty) {
+            this.loadEmpty = loadEmpty;
+            return this;
+        }
+
+        public Builder setLoadError(int loadError) {
+            this.loadError = loadError;
+            return this;
+        }
+    }
+    public static Builder getBuilder() {
+        return builder;
+    }
+
 }

@@ -23,7 +23,7 @@ import android.view.ViewGroup;
  *
  * @author LuckyJayce
  */
-public class VaryViewHelper implements IVaryViewHelper {
+  class VaryViewHelper implements IVaryViewHelper {
     private View view;
     private ViewGroup parentView;
     private int viewIndex;
@@ -75,7 +75,7 @@ public class VaryViewHelper implements IVaryViewHelper {
                 parent.removeView(view);
             }
             parentView.removeViewAt(viewIndex);
-            parentView.addView(view, viewIndex, params);
+            parentView.addView(view,viewIndex,params);
         }
     }
 

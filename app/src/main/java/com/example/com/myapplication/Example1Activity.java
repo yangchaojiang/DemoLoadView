@@ -121,7 +121,7 @@ public class Example1Activity extends AppCompatActivity {
 			} else {
 				data.clear();
 				data.addAll(result);
-				helper.restore();
+				helper.showContent();
 				adapter.notifyDataSetChanged();
 			}
 		}
