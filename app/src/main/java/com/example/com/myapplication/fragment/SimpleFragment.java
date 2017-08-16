@@ -100,6 +100,9 @@ public class SimpleFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<String> result) {
+            if (isCancelled()){
+                return;
+            }
             super.onPostExecute(result);
             if (result == null) {
                 helper.showError();
@@ -113,5 +116,12 @@ public class SimpleFragment extends Fragment {
             }
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        task.cancel(true);
+        helper.onDestroy();
     }
 }

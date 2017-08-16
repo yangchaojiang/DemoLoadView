@@ -16,6 +16,6 @@ public class App extends Application {
             LoadViewHelper.getBuilder()
                 .setLoadEmpty(R.layout.this_empty)
                 .setLoadError(R.layout.this_error)
-                .setLoadIng(R.layout.this_load_ing);
+                .setLoadIng(R.layout.load_ing);
     }
 }
