@@ -8,14 +8,14 @@
 通过Gradle抓取:
 
 ```gradle
-compile 'com.ycjiang:loadviewhelper:1.0.2'
+compile 'com.ycjiang:loadviewhelper:1.0.6'
 
 ```
 ```Maven
 <dependency>
   <groupId>com.ycjiang</groupId>
   <artifactId>loadviewhelper</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.6</version>
   <type>pom</type>
 </dependency>
 ````

@@ -63,7 +63,7 @@ import android.view.ViewGroup;
     }
 
     @Override
-    public void showLayout(View view) {
+    public synchronized    void showLayout(View view) {
         if (parentView == null) {
             init();
         }
@@ -74,9 +74,9 @@ import android.view.ViewGroup;
             if (parent != null) {
                 parent.removeView(view);
             }
-            parentView.removeViewAt(viewIndex);
-            parentView.addView(view,viewIndex,params);
+           parentView.removeAllViews();
         }
+        parentView.addView(view, params);
     }
 
     @Override
