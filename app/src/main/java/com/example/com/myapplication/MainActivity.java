@@ -33,4 +33,7 @@ public class MainActivity extends Activity {
     public void showExample3(View view) {
         startActivity(new Intent(getApplicationContext(), DemoFragmentActivity.class));
     }
+    public void showExample4(View view) {
+        startActivity(new Intent(getApplicationContext(), Example3Activity.class));
+    }
 }

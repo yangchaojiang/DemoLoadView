@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -32,96 +32,17 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-core-utils:25.3.1'
 }
+
+apply plugin: 'com.novoda.bintray-release'
 /** 以下开始是将Android Library上传到jcenter的相关配置**/
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-//项目主页
-def siteUrl = 'https://github.com/yangchaojiang/DemoLoadView'    // project homepage
-//项目的版本控制地址
-def gitUrl = 'https://github.com/yangchaojiang/DemoLoadView.git' // project git
-
-//发布到组织名称名字，必须填写
-group = "com.ycjiang"   //没有用户名
-//发布到JCenter上的项目名字，必须填写
-def libName = "loadviewhelper"
-// 版本号，下次更新是只需要更改版本号即可
-version = "1.0.6"
-/**  上面配置后上传至jcenter后的编译路径是这样的： compile  com.ycjiang :VideoRecorderCompress:1.0'  **/
-
-//生成源文件
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-//生成文档
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    options.encoding "UTF-8"
-    options.charSet 'UTF-8'
-    options.author true
-    options.version true
-    options.links "https://github.com/linglongxin24/FastDev/tree/master/mylibrary/docs/javadoc"
-    failOnError false
-}
-
-//文档打包成jar
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-//拷贝javadoc文件
-task copyDoc(type: Copy) {
-    from "${buildDir}/docs/"
-    into "docs"
-}
-
-//上传到jcenter所需要的源码文件
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-// 配置maven库，生成POM.xml文件
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                name libName
-                url siteUrl
-                licenses {
-                    license {
-                        name libName
-                        url siteUrl
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-
-//上传到jcenter
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")    //读取 local.properties 文件里面的 bintray.user
-    key = properties.getProperty("bintray.apikey")   //读取 local.properties 文件里面的 bintray.apikey
-    configurations = ['archives']
-    pkg {
-        repo = "yangjiang"
-        name = libName    //发布到JCenter上的项目名字，必须填写
-        desc = 'Load switch, load failure, load the successful layout, define a LoadViewHelper generic for all interfaces, without having to add layout in view, greatly reducing coupling.'    //项目描述
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
+publish {
+    userOrg = 'ycjiang'
+    repoName="yangjiang"
+    groupId = 'com.ycjiang'
+    artifactId = 'loadviewhelper'
+    publishVersion = '1.1.0'
+    desc = 'Load switch, load failure, load the successful layout, define a LoadViewHelper generic for all interfaces, without having to add layout in view, greatly reducing coupling.'
+    website = 'https://github.com/yangchaojiang/DemoLoadView.git'
 }

@@ -8,23 +8,27 @@
 通过Gradle抓取:
 
 ```gradle
-compile 'com.ycjiang:loadviewhelper:1.0.6'
+compile 'com.ycjiang:loadviewhelper:1.1.0'
 
 ```
 ```Maven
 <dependency>
   <groupId>com.ycjiang</groupId>
   <artifactId>loadviewhelper</artifactId>
-  <version>1.0.6</version>
+  <version>1.1.0/version>
   <type>pom</type>
 </dependency>
 ````
+### 更新日志
+  #### 1.1.0 
+   * 1.优化内部处理，代码更简洁  
+    * 1.增加弹打入染出效果。  
 
 ![](images/sss.gif)
 
 ### 在你Framgment 或者ACtivity
 
-```java
+```
     LoadViewHelper helper = new LoadViewHelper(listView);  
 	    //将listview切换成显示加载中布局
 

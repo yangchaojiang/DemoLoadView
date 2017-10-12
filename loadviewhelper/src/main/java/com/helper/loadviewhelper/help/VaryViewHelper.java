@@ -13,6 +13,12 @@ limitations under the License.
 package com.helper.loadviewhelper.help;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
+import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,33 +29,30 @@ import android.view.ViewGroup;
  *
  * @author LuckyJayce
  */
-  class VaryViewHelper implements IVaryViewHelper {
-    private View view;
-    private ViewGroup parentView;
-    private int viewIndex;
-    private ViewGroup.LayoutParams params;
+class VaryViewHelper implements IVaryViewHelper {
     private View currentView;
+    private ViewGroup parentView;
+    private ViewGroup.LayoutParams params;
+    private boolean isLoad;
+    private ViewPropertyAnimatorCompat animatorCompat;
+    private ViewPropertyAnimatorCompat animatorCompat2;
 
-    public VaryViewHelper(View view) {
+    VaryViewHelper(View view) {
         super();
-        this.view = view;
+        this.currentView = view;
+        init();
     }
 
+    /***
+     *初始化
+     * **/
     private void init() {
-        params =  view.getLayoutParams();
-        if (view.getParent() != null) {
-            parentView = (ViewGroup) view.getParent();
+        params = currentView.getLayoutParams();
+        if (currentView.getParent() != null) {
+            parentView = (ViewGroup) currentView.getParent();
         } else {
-            parentView = (ViewGroup) view.getRootView().findViewById(android.R.id.content);
+            parentView = (ViewGroup) currentView.getRootView().findViewById(android.R.id.content);
         }
-        int count = parentView.getChildCount();
-        for (int index = 0; index < count; index++) {
-            if (view == parentView.getChildAt(index)) {
-                viewIndex = index;
-                break;
-            }
-        }
-        currentView = view;
     }
 
     @Override
@@ -59,25 +62,82 @@ import android.view.ViewGroup;
 
     @Override
     public void restoreView() {
-        showLayout(view);
+        showLayout(currentView);
     }
 
     @Override
-    public synchronized    void showLayout(View view) {
+    public void showLayout(final View view) {
         if (parentView == null) {
-            init();
+            return;
         }
-        this.currentView = view;
         // 如果已经是那个view，那就不需要再进行替换操作了
-        if (parentView.getChildAt(viewIndex) != view) {
-            ViewGroup parent = (ViewGroup) view.getParent();
+        if (parentView.getChildAt(0) != view) {
+            final ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null) {
                 parent.removeView(view);
             }
-           parentView.removeAllViews();
+            if (!isLoad) {
+                isLoad = true;
+                parentView.removeAllViews();
+                parentView.addView(view, params);
+            } else {
+                if (animatorCompat != null) {
+                    animatorCompat.cancel();
+                }
+                if (animatorCompat2 != null) {
+                    animatorCompat2.cancel();
+                }
+                view.setAlpha(0);
+                animatorCompat = ViewCompat.animate(parentView.getChildAt(0))
+                        .alpha(0)
+                        .setDuration(300)
+                        .setListener(new ViewPropertyAnimatorListener() {
+                            @Override
+                            public void onAnimationStart(View view) {
+                            }
+
+                            @Override
+                            public void onAnimationEnd(View views) {
+                                if (views != null) {
+                                    parentView.removeAllViews();
+                                    parentView.addView(view, params);
+                                }
+
+                            }
+
+                            @Override
+                            public void onAnimationCancel(View view) {
+
+                            }
+                        });
+                animatorCompat.start();
+                animatorCompat2 = ViewCompat
+                        .animate(view)
+                        .alpha(1)
+                        .setListener(new ViewPropertyAnimatorListener() {
+                            @Override
+                            public void onAnimationStart(View view) {
+                            }
+
+                            @Override
+                            public void onAnimationEnd(View view) {
+                                Log.d("TAG","onAnimationEnd:"+view.getAlpha()+"");
+
+                            }
+
+                            @Override
+                            public void onAnimationCancel(View view) {
+
+                            }
+                        })
+                        .setDuration(800)
+                        .setStartDelay(300);
+                animatorCompat2.start();
+            }
+
         }
-        parentView.addView(view, params);
     }
+
 
     @Override
     public void showLayout(int layoutId) {
@@ -86,16 +146,16 @@ import android.view.ViewGroup;
 
     @Override
     public View inflate(int layoutId) {
-        return LayoutInflater.from(view.getContext()).inflate(layoutId, null);
+        return LayoutInflater.from(currentView.getContext()).inflate(layoutId, null);
     }
 
     @Override
     public Context getContext() {
-        return view.getContext();
+        return currentView.getContext();
     }
 
     @Override
     public View getView() {
-        return view;
+        return currentView;
     }
 }

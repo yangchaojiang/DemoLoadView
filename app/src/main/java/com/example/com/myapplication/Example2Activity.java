@@ -23,7 +23,7 @@ public class Example2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_example2);
         editText = (EditText) findViewById(R.id.editText1);
         webView = (WebView) findViewById(R.id.webView1);
-        helper = new LoadViewHelper(new VaryViewHelperX(webView));
+        helper = new LoadViewHelper(webView);
         webView.setWebViewClient(webViewClient);
         webView.loadUrl(editText.getText().toString());
     }

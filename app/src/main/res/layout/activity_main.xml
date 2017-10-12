@@ -25,5 +25,16 @@
         android:layout_height="wrap_content"
         android:onClick="showExample3"
         android:text="哇，酷！" />
-
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showExample2"
+        android:text="web哇，酷！" />
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showExample4"
+        android:text="哇，酷！2" />
 </LinearLayout>

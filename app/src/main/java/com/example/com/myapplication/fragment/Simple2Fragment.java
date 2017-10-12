@@ -5,15 +5,12 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.com.myapplication.Example1Activity;
 import com.example.com.myapplication.R;
 import com.helper.loadviewhelper.help.OnLoadViewListener;
 import com.helper.loadviewhelper.load.LoadViewHelper;
@@ -22,20 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SimpleFragment extends Fragment {
+public class Simple2Fragment extends Fragment {
     LoadViewHelper helper;
     int type;
-    private ListView listView;
     private LoadDataTask task;
-    private ArrayAdapter<String> adapter;
-    private List<String> data = new ArrayList<>();
     Random rand;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_layot, container, false);
+        return inflater.inflate(R.layout.fragment_layot2, container, false);
 
     }
 
@@ -43,9 +37,7 @@ public class SimpleFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView = (ListView) view.findViewById(R.id.listView1);
-        helper = new LoadViewHelper(listView);
-        listView.setAdapter(adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, data));
+        helper=new LoadViewHelper( view.findViewById(R.id.text));
         helper.showLoading();
         rand = new Random();
         type = rand.nextInt(3);
@@ -55,11 +47,11 @@ public class SimpleFragment extends Fragment {
             @Override
             public void onRetryClick() {
                 type = rand.nextInt(3);
-                task = new SimpleFragment.LoadDataTask();
+                task = new Simple2Fragment.LoadDataTask();
                 task.execute();
             }
         });
-        task = new SimpleFragment.LoadDataTask();
+        task = new Simple2Fragment.LoadDataTask();
         task.execute();
 
     }
@@ -105,10 +97,7 @@ public class SimpleFragment extends Fragment {
             } else if (result.isEmpty()) {
                 helper.showEmpty();
             } else {
-                data.clear();
-                data.addAll(result);
                 helper.showContent();
-                adapter.notifyDataSetChanged();
             }
         }
 

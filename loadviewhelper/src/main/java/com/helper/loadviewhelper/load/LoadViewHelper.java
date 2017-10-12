@@ -1,12 +1,14 @@
 
 package com.helper.loadviewhelper.load;
 
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import com.helper.loadviewhelper.R;
-import com.helper.loadviewhelper.help.IVaryViewHelper;
 import com.helper.loadviewhelper.help.OnLoadViewListener;
 import com.helper.loadviewhelper.help.VaryViewHelperX;
 
@@ -17,21 +19,18 @@ import com.helper.loadviewhelper.help.VaryViewHelperX;
  * 使用者可以根据自己的需求，使用自己定义的布局样式
  */
 public class LoadViewHelper implements OnClickListener {
-
-    private IVaryViewHelper helper;
+    private VaryViewHelperX helper;
     private View loadError;
     private View loadEmpty;
     private View loadIng;
-
     private OnLoadViewListener listener;
     private  volatile static   Builder builder=new Builder();
 
-
-    public LoadViewHelper(View view) {
+    public LoadViewHelper(@NonNull View view) {
         this(new VaryViewHelperX(view));
     }
 
-    public LoadViewHelper(VaryViewHelperX helper) {
+    private  LoadViewHelper(@Nullable VaryViewHelperX helper) {
         super();
         this.helper = helper;
     }
@@ -44,7 +43,7 @@ public class LoadViewHelper implements OnClickListener {
      * @param errorText  错误内容
      * @param buttonText 错误按钮
      *****/
-    public void showError(String errorText, String buttonText) {
+    public void showError(@Nullable String errorText,@Nullable String buttonText) {
         if (loadError == null) {
             if (builder.loadError==0){
                 loadError = helper.inflate(R.layout.load_error);
@@ -82,7 +81,7 @@ public class LoadViewHelper implements OnClickListener {
      * @param errorText  错误内容
      * @param buttonText 错误按钮内容
      *****/
-    public void showEmpty(String errorText, String buttonText) {
+    public void showEmpty(@Nullable String errorText, @Nullable String buttonText) {
         if (loadEmpty == null) {
             if (builder.loadEmpty==0){
                 loadEmpty = helper.inflate(R.layout.load_empty);
@@ -143,48 +142,51 @@ public class LoadViewHelper implements OnClickListener {
         helper.restoreView();
     }
 
+    @NonNull
     public View getLoadError() {
         return loadError;
     }
 
-    public void setLoadError(View loadError) {
+    public void setLoadError(@NonNull  View loadError) {
         this.loadError = loadError;
     }
 
-    public void setLoadError(int loadErrorRes) {
+    public void setLoadError(@IdRes int loadErrorRes) {
         this.loadError = helper.inflate(loadErrorRes);
     }
 
+    @NonNull
     public View getLoadEmpty() {
         return loadEmpty;
     }
 
-    public void setLoadEmpty(View loadEmpty) {
+    public void setLoadEmpty(@NonNull View loadEmpty) {
         this.loadEmpty = loadEmpty;
     }
 
-    public void setLoadEmpty(int loadEmptyRes) {
+    public void setLoadEmpty(@IdRes int loadEmptyRes) {
         this.loadEmpty = helper.inflate(loadEmptyRes);
-        ;
     }
 
+    @NonNull
     public View getLoadIng() {
         return loadIng;
     }
 
-    public void setLoadIng(View loadIng) {
+    public void setLoadIng(@NonNull View loadIng) {
         this.loadIng = loadIng;
     }
 
-    public void setLoadIng(int loadIngRes) {
+    public void setLoadIng(@IdRes int loadIngRes) {
         this.loadIng = helper.inflate(loadIngRes);
     }
 
+    @NonNull
     public OnLoadViewListener getListener() {
         return listener;
     }
 
-    public void setListener(OnLoadViewListener listener) {
+    public void setListener(@NonNull OnLoadViewListener listener) {
         this.listener = listener;
     }
 
@@ -214,7 +216,6 @@ public class LoadViewHelper implements OnClickListener {
         public Builder() {
 
         }
-
         public Builder setLoadIng(int loadIng) {
             this.loadIng = loadIng;
             return this;

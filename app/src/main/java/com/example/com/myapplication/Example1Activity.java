@@ -6,6 +6,7 @@ import java.util.Random;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -93,12 +94,8 @@ public class Example1Activity extends AppCompatActivity {
 
 		@Override
 		protected List<String> doInBackground(Void... params) {
-			try {
 				// 模拟2秒到5秒的等待时间
-				Thread.sleep((new Random().nextInt(10) + 20) * 100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+				SystemClock.sleep(3000);
 			if (type == 1) {
 				return null;
 			} else if (type == 2) {
