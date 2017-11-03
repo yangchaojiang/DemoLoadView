@@ -22,7 +22,7 @@ compile 'com.ycjiang:loadviewhelper:1.1.0'
 ### 更新日志
   #### 1.1.0 
    * 1.优化内部处理，代码更简洁  
-    * 1.增加弹打入染出效果。  
+    * 1.增加谈谈入谈出效果。  
 
 ![](images/sss.gif)
 
