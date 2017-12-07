@@ -13,6 +13,8 @@ limitations under the License.
 package com.helper.loadviewhelper.help;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 public interface IVaryViewHelper {
@@ -21,7 +23,7 @@ public interface IVaryViewHelper {
 
     void restoreView();
 
-    void showLayout(View view);
+    void showLayout(@NonNull View view);
 
     void showLayout(int layoutId);
 
@@ -31,4 +33,5 @@ public interface IVaryViewHelper {
 
     View getView();
 
+    void release();
 }

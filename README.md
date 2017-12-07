@@ -8,21 +8,11 @@
 通过Gradle抓取:
 
 ```gradle
-compile 'com.ycjiang:loadviewhelper:1.1.0'
+compile 'com.ycjiang:loadviewhelper:1.1.1'
 
 ```
-```Maven
-<dependency>
-  <groupId>com.ycjiang</groupId>
-  <artifactId>loadviewhelper</artifactId>
-  <version>1.1.0/version>
-  <type>pom</type>
-</dependency>
-````
-### 更新日志
-  #### 1.1.0 
-   * 1.优化内部处理，代码更简洁  
-    * 1.增加弹打入染出效果。  
+ 
+
 
 ![](images/sss.gif)
 
@@ -64,7 +54,7 @@ public class App extends Application {
 ```
 
 ### 使用局部自定义布局
-```java
+```
   helper.setLoadEmpty(view)
   helper.setLoadEmpty(resId);
   helper.getLoadIng(view);
@@ -77,7 +67,12 @@ public class App extends Application {
 ![](images/ssssssss.gif)
 
 
-
+### 更新日志
+  #### 1.1.1
+   * 1.修复点击重试出现一直处于load中。
+  #### 1.1.0 
+   * 1.优化内部处理，代码更简洁  
+   * 1.增加谈出谈入效果。  
 
 
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.helper.loadviewhelper.R;
 import com.helper.loadviewhelper.help.OnLoadViewListener;
 import com.helper.loadviewhelper.help.VaryViewHelperX;
@@ -24,13 +25,13 @@ public class LoadViewHelper implements OnClickListener {
     private View loadEmpty;
     private View loadIng;
     private OnLoadViewListener listener;
-    private  volatile static   Builder builder=new Builder();
+    private volatile static Builder builder = new Builder();
 
     public LoadViewHelper(@NonNull View view) {
         this(new VaryViewHelperX(view));
     }
 
-    private  LoadViewHelper(@Nullable VaryViewHelperX helper) {
+    private LoadViewHelper(@Nullable VaryViewHelperX helper) {
         super();
         this.helper = helper;
     }
@@ -43,21 +44,22 @@ public class LoadViewHelper implements OnClickListener {
      * @param errorText  错误内容
      * @param buttonText 错误按钮
      *****/
-    public void showError(@Nullable String errorText,@Nullable String buttonText) {
+    public void showError(@Nullable String errorText, @Nullable String buttonText) {
         if (loadError == null) {
-            if (builder.loadError==0){
+            if (builder.loadError == 0) {
                 loadError = helper.inflate(R.layout.load_error);
                 if (errorText != null) {
-                    TextView textView = (TextView) loadError.findViewById(R.id.load_error_id_text);
+                    TextView textView = loadError.findViewById(R.id.load_error_id_text);
                     textView.setText(errorText);
                 }
                 if (buttonText != null) {
-                    Button button = (Button) loadError.findViewById(R.id.load_error_id_btn);
+                    Button button = loadError.findViewById(R.id.load_error_id_btn);
                     button.setText(buttonText);
                 }
-            }else {
+            } else {
                 loadError = helper.inflate(builder.loadError);
             }
+            loadError.setTag(loadError.getClass().getName());
         }
         if (loadError.findViewById(R.id.load_error_id_btn) != null) {
             loadError.findViewById(R.id.load_error_id_btn).setOnClickListener(this);
@@ -83,19 +85,20 @@ public class LoadViewHelper implements OnClickListener {
      *****/
     public void showEmpty(@Nullable String errorText, @Nullable String buttonText) {
         if (loadEmpty == null) {
-            if (builder.loadEmpty==0){
+            if (builder.loadEmpty == 0) {
                 loadEmpty = helper.inflate(R.layout.load_empty);
                 if (errorText != null) {
-                    TextView textView = (TextView) loadEmpty.findViewById(R.id.load_empty_id_text);
+                    TextView textView = loadEmpty.findViewById(R.id.load_empty_id_text);
                     textView.setText(errorText);
                 }
                 if (buttonText != null) {
-                    Button button = (Button) loadEmpty.findViewById(R.id.load_empty_id_btn);
+                    Button button = loadEmpty.findViewById(R.id.load_empty_id_btn);
                     button.setText(buttonText);
                 }
-            }else {
+            } else {
                 loadEmpty = helper.inflate(builder.loadEmpty);
             }
+            loadEmpty.setTag(loadEmpty.getClass().getName());
         }
         if (loadEmpty.findViewById(R.id.load_empty_id_btn) != null) {
             loadEmpty.findViewById(R.id.load_empty_id_btn).setOnClickListener(this);
@@ -120,13 +123,14 @@ public class LoadViewHelper implements OnClickListener {
      **/
     public void showLoading(String loadText) {
         if (loadIng == null) {
-            if (builder.loadIng==0){
+            if (builder.loadIng == 0) {
                 loadIng = helper.inflate(R.layout.load_ing);
-                TextView textView = (TextView) loadIng.findViewById(R.id.load_ing_id_text);
+                TextView textView = loadIng.findViewById(R.id.load_ing_id_text);
                 textView.setText(loadText);
-            }else {
+            } else {
                 loadIng = helper.inflate(builder.loadIng);
             }
+            loadIng.setTag(loadIng.getClass().getName());
         }
         helper.showLayout(loadIng);
     }
@@ -147,7 +151,7 @@ public class LoadViewHelper implements OnClickListener {
         return loadError;
     }
 
-    public void setLoadError(@NonNull  View loadError) {
+    public void setLoadError(@NonNull View loadError) {
         this.loadError = loadError;
     }
 
@@ -181,21 +185,20 @@ public class LoadViewHelper implements OnClickListener {
         this.loadIng = helper.inflate(loadIngRes);
     }
 
-    @NonNull
-    public OnLoadViewListener getListener() {
-        return listener;
-    }
-
     public void setListener(@NonNull OnLoadViewListener listener) {
         this.listener = listener;
     }
 
 
     public void onDestroy() {
+        if (helper != null) {
+            helper.release();
+        }
         loadError = null;
         loadEmpty = null;
         loadIng = null;
         listener = null;
+        helper=null;
     }
 
     @Override
@@ -208,14 +211,18 @@ public class LoadViewHelper implements OnClickListener {
     /***
      * 全部配置类
      * ***/
-    public static final  class Builder {
-        int loadIng;//全局配置加载
-        int loadEmpty;//全局配置为空
-        int loadError;//全局配置错误
+    public static final class Builder {
+        //全局配置加载
+        int loadIng;
+        //全局配置为空
+        int loadEmpty;
+        //全局配置错误
+        int loadError;
 
-        public Builder() {
+        private Builder() {
 
         }
+
         public Builder setLoadIng(int loadIng) {
             this.loadIng = loadIng;
             return this;
@@ -231,6 +238,7 @@ public class LoadViewHelper implements OnClickListener {
             return this;
         }
     }
+
     public static Builder getBuilder() {
         return builder;
     }

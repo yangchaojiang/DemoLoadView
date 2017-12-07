@@ -6,9 +6,9 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/sym_def_app_icon"
+        android:text="错误了点击重试"
         android:id="@+id/imageView" />
 </LinearLayout>

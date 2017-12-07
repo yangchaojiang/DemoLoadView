@@ -23,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.ref.WeakReference;
+
 
 /**
  * 用于切换布局,用一个新的布局替换掉原先的布局
@@ -37,9 +39,10 @@ class VaryViewHelper implements IVaryViewHelper {
     private ViewPropertyAnimatorCompat animatorCompat;
     private ViewPropertyAnimatorCompat animatorCompat2;
 
-    VaryViewHelper(View view) {
+    VaryViewHelper(@NonNull View view) {
         super();
         this.currentView = view;
+        currentView.setTag(currentView.getClass().getName());
         init();
     }
 
@@ -51,7 +54,7 @@ class VaryViewHelper implements IVaryViewHelper {
         if (currentView.getParent() != null) {
             parentView = (ViewGroup) currentView.getParent();
         } else {
-            parentView = (ViewGroup) currentView.getRootView().findViewById(android.R.id.content);
+            parentView = currentView.getRootView().findViewById(android.R.id.content);
         }
     }
 
@@ -66,78 +69,40 @@ class VaryViewHelper implements IVaryViewHelper {
     }
 
     @Override
-    public void showLayout(final View view) {
+    public void showLayout(@NonNull View view) {
         if (parentView == null) {
             return;
         }
         // 如果已经是那个view，那就不需要再进行替换操作了
-        if (parentView.getChildAt(0) != view) {
+        View view1 = parentView.getChildAt(0);
+        if (view1 != null && !view1.toString().equals(view.toString())) {
             final ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null) {
                 parent.removeView(view);
             }
+            //第一次进入也不需要动画
             if (!isLoad) {
                 isLoad = true;
                 parentView.removeAllViews();
                 parentView.addView(view, params);
             } else {
-                if (animatorCompat != null) {
-                    animatorCompat.cancel();
-                }
-                if (animatorCompat2 != null) {
-                    animatorCompat2.cancel();
-                }
+                release();
                 view.setAlpha(0);
-                animatorCompat = ViewCompat.animate(parentView.getChildAt(0))
+                animatorCompat = ViewCompat.animate(view1)
                         .alpha(0)
-                        .setDuration(300)
-                        .setListener(new ViewPropertyAnimatorListener() {
-                            @Override
-                            public void onAnimationStart(View view) {
-                            }
-
-                            @Override
-                            public void onAnimationEnd(View views) {
-                                if (views != null) {
-                                    parentView.removeAllViews();
-                                    parentView.addView(view, params);
-                                }
-
-                            }
-
-                            @Override
-                            public void onAnimationCancel(View view) {
-
-                            }
-                        });
+                        .setDuration(400)
+                        .setListener(new ViewPropertyAnimator(this,view));
                 animatorCompat.start();
                 animatorCompat2 = ViewCompat
                         .animate(view)
                         .alpha(1)
-                        .setListener(new ViewPropertyAnimatorListener() {
-                            @Override
-                            public void onAnimationStart(View view) {
-                            }
-
-                            @Override
-                            public void onAnimationEnd(View view) {
-                                Log.d("TAG","onAnimationEnd:"+view.getAlpha()+"");
-
-                            }
-
-                            @Override
-                            public void onAnimationCancel(View view) {
-
-                            }
-                        })
                         .setDuration(800)
-                        .setStartDelay(300);
+                        .setStartDelay(400);
                 animatorCompat2.start();
             }
 
         }
     }
-
 
     @Override
     public void showLayout(int layoutId) {
@@ -158,4 +123,49 @@ class VaryViewHelper implements IVaryViewHelper {
     public View getView() {
         return currentView;
     }
+    @Override
+    public void release() {
+        if (animatorCompat != null) {
+            animatorCompat.cancel();
+            animatorCompat.setListener(null);
+        }
+        if (animatorCompat2 != null) {
+            animatorCompat2.cancel();
+        }
+    }
+
+    class ViewPropertyAnimator implements ViewPropertyAnimatorListener {
+        private WeakReference<VaryViewHelper> ssl;
+        private View v;
+
+        ViewPropertyAnimator(VaryViewHelper varyViewHelper, View view) {
+            ssl = new WeakReference<>(varyViewHelper);
+            v = view;
+
+        }
+
+        @Override
+        public void onAnimationStart(View view) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(View view) {
+            if (ssl.get() == null || view == null) {
+                return;
+            }
+            parentView.removeAllViews();
+            parentView.addView(v, params);
+        }
+
+        @Override
+        public void onAnimationCancel(View view) {
+            if (ssl.get() == null || view == null) {
+                return;
+            }
+            parentView.removeAllViews();
+            parentView.addView(v, params);
+        }
+    }
+
 }

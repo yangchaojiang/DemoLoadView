@@ -29,7 +29,7 @@ public class SimpleActivity extends Activity {
     }
 
     public void showError(View view) {
-        helper.showError();
+        helper.showError("出错了","重试");
     }
 
     public void showEmpty(View view) {

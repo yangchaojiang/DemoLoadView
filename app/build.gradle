@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "26.0.3"
     defaultConfig {
         applicationId "com.example.com.myapplication"
         minSdkVersion 14
@@ -21,18 +21,6 @@ android {
         abortOnError false
     }
 }
-
-// aar config
-
-//repositories {
-
-//    flatDir {
-
-//        dirs 'libs'
-
-//    }
-
-//}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

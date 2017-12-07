@@ -2,6 +2,8 @@
 package com.helper.loadviewhelper.help;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -18,7 +20,7 @@ public class VaryViewHelperX {
     private IVaryViewHelper helper;
     private View view;
 
-    public VaryViewHelperX(View view) {
+    public VaryViewHelperX(@NonNull View view) {
         super();
         this.view = view;
         ViewGroup group = (ViewGroup) view.getParent();
@@ -43,18 +45,15 @@ public class VaryViewHelperX {
         helper.showLayout(view);
     }
 
-
-    public void showLayout(View view) {
+    public void showLayout(@NonNull View view) {
         helper.showLayout(view);
     }
 
-
-    public void showLayout(int layoutId) {
+    public void showLayout( int layoutId) {
         showLayout(inflate(layoutId));
     }
 
-
-    public View inflate(int layoutId) {
+    public View inflate( int layoutId) {
         return helper.inflate(layoutId);
     }
 
@@ -65,5 +64,11 @@ public class VaryViewHelperX {
 
     public View getView() {
         return view;
+    }
+
+    public void release() {
+        if (helper != null) {
+            helper.release();
+        }
     }
 }
