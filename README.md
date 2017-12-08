@@ -68,6 +68,7 @@ public class App extends Application {
 
 
 ### 更新日志
+
   #### 1.1.2
    * 1.修复点击重试出现一直处于loading中.
   #### 1.1.0 

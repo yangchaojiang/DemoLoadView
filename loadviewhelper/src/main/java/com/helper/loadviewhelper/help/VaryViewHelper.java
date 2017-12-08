@@ -165,14 +165,11 @@ class VaryViewHelper implements IVaryViewHelper {
         ViewPropertyAnimator(VaryViewHelper varyViewHelper, View view) {
             ssl = new WeakReference<>(varyViewHelper);
             v = view;
-
         }
-
         @Override
         public void onAnimationStart(View view) {
 
         }
-
         @Override
         public void onAnimationEnd(View view) {
             if (ssl.get() == null) {
