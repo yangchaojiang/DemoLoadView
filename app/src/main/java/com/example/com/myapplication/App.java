@@ -13,9 +13,9 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-         /*   LoadViewHelper.getBuilder()
-                .setLoadEmpty(R.layout.this_empty)
+            LoadViewHelper.getBuilder()
+                .setLoadEmpty(R.layout.this_error)
                 .setLoadError(R.layout.this_error)
-                .setLoadIng(R.layout.load_ing);*/
+                .setLoadIng(R.layout.load_ing);
     }
 }

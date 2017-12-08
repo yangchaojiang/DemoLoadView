@@ -2,6 +2,7 @@
 package com.helper.loadviewhelper.load;
 
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -36,6 +37,13 @@ public class LoadViewHelper implements OnClickListener {
         this.helper = helper;
     }
 
+    /****
+     * 显示错误页
+     * 默认
+     ***/
+    public void showError() {
+        showError(null, null);
+    }
     /*****
      * /****
      * 显示错误页
@@ -69,13 +77,6 @@ public class LoadViewHelper implements OnClickListener {
         helper.showLayout(loadError);
     }
 
-    /****
-     * 显示错误页
-     * 默认
-     ***/
-    public void showError() {
-        showError(null, null);
-    }
 
     /**
      * 显示空白页
@@ -155,7 +156,7 @@ public class LoadViewHelper implements OnClickListener {
         this.loadError = loadError;
     }
 
-    public void setLoadError(@IdRes int loadErrorRes) {
+    public void setLoadError(@LayoutRes int loadErrorRes) {
         this.loadError = helper.inflate(loadErrorRes);
     }
 
@@ -168,7 +169,7 @@ public class LoadViewHelper implements OnClickListener {
         this.loadEmpty = loadEmpty;
     }
 
-    public void setLoadEmpty(@IdRes int loadEmptyRes) {
+    public void setLoadEmpty(@LayoutRes int loadEmptyRes) {
         this.loadEmpty = helper.inflate(loadEmptyRes);
     }
 
@@ -181,7 +182,7 @@ public class LoadViewHelper implements OnClickListener {
         this.loadIng = loadIng;
     }
 
-    public void setLoadIng(@IdRes int loadIngRes) {
+    public void setLoadIng(@LayoutRes int loadIngRes) {
         this.loadIng = helper.inflate(loadIngRes);
     }
 

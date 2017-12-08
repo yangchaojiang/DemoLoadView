@@ -69,7 +69,7 @@ class VaryViewHelper implements IVaryViewHelper {
     }
 
     @Override
-    public void showLayout(@NonNull View view) {
+    public synchronized void showLayout(@NonNull View view) {
         if (parentView == null) {
             return;
         }
@@ -86,18 +86,41 @@ class VaryViewHelper implements IVaryViewHelper {
                 parentView.removeAllViews();
                 parentView.addView(view, params);
             } else {
+                if (animatorCompat != null) {
+                    parentView.removeAllViews();
+                    parentView.addView(view, params);
+                }
                 release();
                 view.setAlpha(0);
                 animatorCompat = ViewCompat.animate(view1)
                         .alpha(0)
-                        .setDuration(400)
+                        .setDuration(350)
                         .setListener(new ViewPropertyAnimator(this,view));
                 animatorCompat.start();
                 animatorCompat2 = ViewCompat
                         .animate(view)
                         .alpha(1)
+                        .setListener(new ViewPropertyAnimatorListener() {
+                            @Override
+                            public void onAnimationStart(View view) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(View view) {
+
+                            }
+
+                            @Override
+                            public void onAnimationCancel(View view) {
+                                if (view!=null) {
+                                    view.setAlpha(1);
+                                }
+
+                            }
+                        })
                         .setDuration(800)
-                        .setStartDelay(400);
+                        .setStartDelay(350);
                 animatorCompat2.start();
             }
 
@@ -111,7 +134,7 @@ class VaryViewHelper implements IVaryViewHelper {
 
     @Override
     public View inflate(int layoutId) {
-        return LayoutInflater.from(currentView.getContext()).inflate(layoutId, null);
+        return LayoutInflater.from(getContext()).inflate(layoutId, null);
     }
 
     @Override
@@ -131,6 +154,7 @@ class VaryViewHelper implements IVaryViewHelper {
         }
         if (animatorCompat2 != null) {
             animatorCompat2.cancel();
+            animatorCompat.setListener(null);
         }
     }
 
@@ -151,7 +175,7 @@ class VaryViewHelper implements IVaryViewHelper {
 
         @Override
         public void onAnimationEnd(View view) {
-            if (ssl.get() == null || view == null) {
+            if (ssl.get() == null) {
                 return;
             }
             parentView.removeAllViews();
@@ -160,11 +184,6 @@ class VaryViewHelper implements IVaryViewHelper {
 
         @Override
         public void onAnimationCancel(View view) {
-            if (ssl.get() == null || view == null) {
-                return;
-            }
-            parentView.removeAllViews();
-            parentView.addView(v, params);
         }
     }
 

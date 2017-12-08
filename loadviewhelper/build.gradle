@@ -42,7 +42,7 @@ publish {
     repoName="yangjiang"
     groupId = 'com.ycjiang'
     artifactId = 'loadviewhelper'
-    publishVersion = '1.1.1'
+    publishVersion = '1.1.2'
     desc = 'Load switch, load failure, load the successful layout, define a LoadViewHelper generic for all interfaces, without having to add layout in view, greatly reducing coupling.'
     website = 'https://github.com/yangchaojiang/DemoLoadView.git'
 }
