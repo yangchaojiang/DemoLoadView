@@ -1,7 +1,6 @@
 
 package com.helper.loadviewhelper.load;
 
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +43,7 @@ public class LoadViewHelper implements OnClickListener {
     public void showError() {
         showError(null, null);
     }
+
     /*****
      * /****
      * 显示错误页
@@ -88,14 +88,7 @@ public class LoadViewHelper implements OnClickListener {
         if (loadEmpty == null) {
             if (builder.loadEmpty == 0) {
                 loadEmpty = helper.inflate(R.layout.load_empty);
-                if (errorText != null) {
-                    TextView textView = loadEmpty.findViewById(R.id.load_empty_id_text);
-                    textView.setText(errorText);
-                }
-                if (buttonText != null) {
-                    Button button = loadEmpty.findViewById(R.id.load_empty_id_btn);
-                    button.setText(buttonText);
-                }
+
             } else {
                 loadEmpty = helper.inflate(builder.loadEmpty);
             }
@@ -190,6 +183,15 @@ public class LoadViewHelper implements OnClickListener {
         this.listener = listener;
     }
 
+    @LayoutRes
+    public int getEmptyLayoutId() {
+        if (builder.loadEmpty == 0) {
+            return R.layout.load_empty;
+
+        } else {
+            return builder.loadEmpty;
+        }
+    }
 
     public void onDestroy() {
         if (helper != null) {
@@ -199,7 +201,7 @@ public class LoadViewHelper implements OnClickListener {
         loadEmpty = null;
         loadIng = null;
         listener = null;
-        helper=null;
+        helper = null;
     }
 
     @Override

@@ -100,25 +100,6 @@ class VaryViewHelper implements IVaryViewHelper {
                 animatorCompat2 = ViewCompat
                         .animate(view)
                         .alpha(1)
-                        .setListener(new ViewPropertyAnimatorListener() {
-                            @Override
-                            public void onAnimationStart(View view) {
-
-                            }
-
-                            @Override
-                            public void onAnimationEnd(View view) {
-
-                            }
-
-                            @Override
-                            public void onAnimationCancel(View view) {
-                                if (view!=null) {
-                                    view.setAlpha(1);
-                                }
-
-                            }
-                        })
                         .setDuration(800)
                         .setStartDelay(350);
                 animatorCompat2.start();
@@ -126,12 +107,6 @@ class VaryViewHelper implements IVaryViewHelper {
 
         }
     }
-
-    @Override
-    public void showLayout(int layoutId) {
-        showLayout(inflate(layoutId));
-    }
-
     @Override
     public View inflate(int layoutId) {
         return LayoutInflater.from(getContext()).inflate(layoutId, null);
@@ -176,6 +151,7 @@ class VaryViewHelper implements IVaryViewHelper {
                 return;
             }
             parentView.removeAllViews();
+            v.setAlpha(1);
             parentView.addView(v, params);
         }
 

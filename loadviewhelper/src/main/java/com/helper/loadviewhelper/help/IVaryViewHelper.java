@@ -25,8 +25,6 @@ public interface IVaryViewHelper {
 
     void showLayout(@NonNull View view);
 
-    void showLayout(int layoutId);
-
     View inflate(int layoutId);
 
     Context getContext();

@@ -33,7 +33,9 @@ public class Example1Activity extends AppCompatActivity {
 		listView.setAdapter(adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data));
 		type=1;
 		task = new LoadDataTask();
-		task.execute();
+		helper.showLoading();
+		helper.showContent();
+		//task.execute();
 		helper.setListener(new OnLoadViewListener() {
 			@Override
 			public void onRetryClick() {

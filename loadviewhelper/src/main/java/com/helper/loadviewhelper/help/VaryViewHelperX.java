@@ -35,22 +35,16 @@ public class VaryViewHelperX {
         helper = new VaryViewHelper(view);
     }
 
-
     public View getCurrentLayout() {
         return view;
     }
 
-
     public void restoreView() {
-        helper.showLayout(view);
+        helper.restoreView();
     }
 
-    public void showLayout(@NonNull View view) {
+    public synchronized void showLayout(@NonNull View view) {
         helper.showLayout(view);
-    }
-
-    public void showLayout( int layoutId) {
-        showLayout(inflate(layoutId));
     }
 
     public View inflate( int layoutId) {

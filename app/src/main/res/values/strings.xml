@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DemoLoadView</string>
+    <string name="lorem_ipsum">Animate between activities
+On Android 5.0 (API level 21) and higher, you can also create animations that transition between your activities. This is based on the same transition framework described above to animate layout changes, but it allows you to create animations between layouts in separate activities.
+
+You can apply simple animations such as sliding the new activity in from the side or fading it in, but you can also create animations that transition between shared views in each activity. For example, when the user taps an item to see more information, you can transition into a new activity with an animation that seamlessly grows that item to fill the screen, like the animation shown in figure 5.</string>
 </resources>
